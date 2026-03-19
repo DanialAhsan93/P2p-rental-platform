@@ -8,6 +8,9 @@ import Contactus from './pages/Contactus';
 import Partnerships from './pages/Partnerships';
 import Tou from './pages/Tou';
 import Dashboard from './pages/Dashboard';
+import Layout from './components/Layout';
+import Profile from './pages/Profile';
+import Booking from './pages/Booking';
 
 
 function App() {
@@ -16,12 +19,19 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<About />} />
-        <Route path="/about-us/mission" element={<Mission />} />
-        <Route path="/about-us/contact" element={<Contactus />} />
-        <Route path="/about-us/partnerships" element={<Partnerships />} />
-        <Route path="/tou" element={<Tou />} />
-        <Route path="/new-item" element={<Dashboard />} />
+
+        <Route element={<Layout />}>
+          <Route path="/about-us" element={<About />} />
+          <Route path="/about-us/mission" element={<Mission />} />
+          <Route path="/about-us/contact" element={<Contactus />} />
+          <Route path="/about-us/partnerships" element={<Partnerships />} />
+          <Route path="/tou" element={<Tou />} />
+          <Route path="/new-item" element={<Dashboard />} />
+          <Route path="/user" element={<Profile />} />
+          <Route path="/rental" element={<Booking />} />
+          <Route path="/new-item" element={<Dashboard />} />
+        </Route>
+
 
       </Routes>
     </BrowserRouter>
