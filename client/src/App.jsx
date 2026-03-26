@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css'
+import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -11,9 +11,16 @@ import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import Profile from './pages/Profile';
 import Booking from './pages/Booking';
+import Chatbot from './components/Chatbot';
+import Footer from './components/Footer';
+import Privacypoilcy from './pages/Privacypoilcy';
+import Categories from './pages/Categories';
+import Blog from './pages/Blog';
+import Countryselector from './components/Countryselector';
 
 
 function App() {
+
 
   return (
     <BrowserRouter>
@@ -30,10 +37,18 @@ function App() {
           <Route path="/user" element={<Profile />} />
           <Route path="/rental" element={<Booking />} />
           <Route path="/new-item" element={<Dashboard />} />
+          <Route path="/privacy-policy" element={<Privacypoilcy />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/country" element={<Countryselector />} />
         </Route>
 
-
       </Routes>
+
+      <Chatbot />
+
+      <Footer />
+
     </BrowserRouter>
 
 

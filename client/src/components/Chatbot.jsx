@@ -1,19 +1,43 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FiChevronUp, FiMessageCircle } from "react-icons/fi";
 import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import Grow from '@mui/material/Grow';
 import { IoCloseSharp } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
+import { useDispatch, useSelector } from 'react-redux';
+import { closeChat, openChat, setView } from '../redux/chatbot/chatbotSlice';
+import Chathow from './Chathow';
+import Chathome from './Chathome';
+import Chatguarantee from './Chatguarantee';
+import Chatfaqs from './Chatfaqs';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import ChatMessage from './ChatMessage';
 
 
-export default function Chatbot({ view, setView, anchorEl, setAnchorEl }) {
-    const open = anchorEl;
+export default function Chatbot() {
+    const [value, setValue] = React.useState(0);
+    const dispatch = useDispatch();
+    const { isOpen, view } = useSelector((state) => state.chatbot);
+
+    useEffect(() => {
+        dispatch(closeChat());
+    }, []);
+
     const buttonRef = useRef(null);
+    const isReady = isOpen && Boolean(buttonRef.current);
 
-    const toggle = (e) => {
-        setAnchorEl(open ? null : e.currentTarget);
+    const toggle = () => {
+        if (isOpen) {
+            dispatch(closeChat());
+        } else {
+            dispatch(openChat(view));
+        }
     };
+
+
+
     return (
         <div>
             <button
@@ -27,13 +51,13 @@ export default function Chatbot({ view, setView, anchorEl, setAnchorEl }) {
 
                     {/* Chevron icon */}
                     <FiChevronUp
-                        className={`text-2xl transition-all duration-500 ${open ? "rotate-180 opacity-100" : "rotate-0 opacity-0"
+                        className={`text-2xl transition-all duration-500 ${isReady ? "rotate-180 opacity-100" : "rotate-0 opacity-0"
                             }`}
                     />
 
                     {/* Message icon */}
                     <FiMessageCircle
-                        className={`absolute text-2xl transition-all duration-300 ${open ? "opacity-0 scale-75" : "opacity-100 scale-100"
+                        className={`absolute text-2xl transition-all duration-300 ${isReady ? "opacity-0 scale-75" : "opacity-100 scale-100"
                             }`}
                     />
 
@@ -41,16 +65,16 @@ export default function Chatbot({ view, setView, anchorEl, setAnchorEl }) {
             </button>
             <Popper
                 // id={id}
-                open={open}
+                open={isOpen && Boolean(buttonRef.current)}
                 anchorEl={buttonRef.current}
-                placement="top-start"
+                placement="top-end"
                 transition
                 disablePortal
                 modifiers={[
                     {
                         name: "offset",
                         options: {
-                            offset: [0, 10],
+                            offset: [0, 12],
                         },
                     },
                 ]}
@@ -59,62 +83,72 @@ export default function Chatbot({ view, setView, anchorEl, setAnchorEl }) {
                     <Grow {...TransitionProps} timeout={300}>
                         <Box
                             sx={{
-                                border: 1,
-                                p: 2,
-                                // bgcolor: "#14161a",
-                                // background: "linear-gradient(to bottom, white 50%, #14161a 50%)",
+                                position: "fixed",
+                                bottom: 0,
+                                right: 0,
+                                width: {
+                                    xs: "80vw",
+                                    sm: "50vw",
+                                    md: "28vw"
+                                },
+                                height: {
+                                    xs: "80dvh",
+                                    sm: "85dvh",
+                                    md: "80vh"
+                                },
+                                bgcolor: "#14161a",
                                 color: "white",
-                                width: 380,
-                                height: 520,
-                                overflowY: "auto",
-                                transformOrigin: "bottom left",
-                                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                                zIndex: 1300,
                                 borderRadius: "30px",
-                                padding: "0px",
+                                boxShadow: "0 -4px 20px rgba(0,0,0,0.2)",
+                                overflowY: "auto",
+                                display: "flex",          // ✅ important
+                                flexDirection: "column"
                             }}
                         >
-                            {view === "home" && (
-                                <>
-                                    <div className='h-full p-5 bg-[linear-gradient(to_bottom,white_50%,#14161a_50%)]'>
-                                        <div className='flex justify-end pt-4 pe-4 pb-2'>
-                                            <button onClick={() => setAnchorEl(null)}>
-                                                <IoCloseSharp className='text-gray-900' />
-                                            </button>
-                                        </div>
-                                        <div className='text-gray-700 mt-4 pt-9 ps-5'>
-                                            <h1 className='text-[30px] '>Hi, there!</h1>
-                                            <h1 className='text-[30px]'>How can we help you?</h1>
-                                        </div>
-                                        <div>
-                                            The content of the Popper.
+                            <Box sx={{
+                                flex: 1,
+                                overflowY: "auto",
+                            }}>
+                                {view === "home" && <Chathome />}
+                                {view === "how" && <Chathow />}
+                                {view === "guarantee" && <Chatguarantee />}
+                                {view === "faqs" && <Chatfaqs />}
+                                {view === "message" && <ChatMessage />}
+                            </Box>
 
-                                        </div>
-                                    </div>
+                            {(view === "home" || view === "message") && (
+                                <BottomNavigation
+                                    showLabels
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
 
-
-                                </>
-                            )}
-
-
-                            {view === "how" && (
-                                <>
-                                    <div className='h-full p-5 bg-[#14161a]'>
-                                        <button onClick={() => setView("home")} className="text-gray-400 mb-3 py-2 px-2">
-                                            <IoIosArrowBack />
-                                        </button>
-
-                                        <h2 className="text-xl font-semibold mb-2">How it works</h2>
-                                        <p>This chatbot helps you find answers quickly and easily.</p>
-                                    </div>
-
-                                </>
+                                        if (newValue === 0) dispatch(setView("home"));
+                                        if (newValue === 1) dispatch(setView("message"));
+                                        if (newValue === 2) dispatch(setView("how"));
+                                    }}
+                                    sx={{
+                                        borderTop: "1px solid #333",
+                                        bgcolor: "#14161a",
+                                        width: "100%",
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    <BottomNavigationAction label="Home" icon={<FiMessageCircle />} />
+                                    <BottomNavigationAction label="message" icon={<FiMessageCircle />} />
+                                    <BottomNavigationAction label="How" icon={<FiMessageCircle />} />
+                                </BottomNavigation>
                             )}
 
                         </Box>
 
                     </Grow>
+
                 )}
+
             </Popper>
+
         </div>
     )
 }

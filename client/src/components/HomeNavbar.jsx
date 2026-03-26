@@ -1,27 +1,20 @@
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
-import { Button } from "flowbite-react";
-import { BsThreeDots } from 'react-icons/bs';
-import { IoIosSearch } from "react-icons/io";
-import Signin from './Signin';
-import { openChat } from '../redux/chatbot/chatbotSlice';
-import { useDispatch } from 'react-redux';
+import { IoIosSearch } from 'react-icons/io'
+import { Link } from 'react-router-dom';
 import { england } from '../index';
-import Flagmodal from './Flagmodal';
+import { BsThreeDots } from 'react-icons/bs';
+import Signin from './Signin';
 
-function Navbar() {
+function HomeNavbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-  const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
-
-    const dispatch = useDispatch();
-
+    const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
 
     return (
-        <div>
-            <nav className="bg-neutral-primary w-[93%] mx-auto ">
-                <div className="max-w-[1400px] flex flex-wrap items-center justify-between mx-auto p-4">
+        <>
+            <nav className="bg-neutral-primary w-[93%] mx-auto lg:block hidden">
+                <div className="flex flex-wrap items-center justify-between mx-auto p-4">
 
                     {/* 🔹 LOGO */}
                     <Link to="/" className="flex items-center">
@@ -30,7 +23,7 @@ function Navbar() {
                             className="h-7"
                             alt="Logo"
                         /> */}
-                        <span className="text-2xl font-semibold text-heading">
+                        <span className="text-2xl font-semibold text-heading text-white">
                             Rental-Platform
                         </span>
                     </Link>
@@ -39,7 +32,7 @@ function Navbar() {
                     <div className="flex items-center lg:flex-1 lg:px-12">
 
                         {/* Search (Desktop) */}
-                        <div className="relative hidden lg:block w-full shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-4xl">
+                        {/* <div className="relative hidden lg:block w-full shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-4xl">
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <IoIosSearch className='text-gray' />
                             </div>
@@ -56,7 +49,7 @@ function Navbar() {
                                 Search
                             </button>
 
-                        </div>
+                        </div> */}
 
                         {/* Mobile menu button */}
                         <button
@@ -71,7 +64,7 @@ function Navbar() {
                     <div className={`${menuOpen ? "block" : "hidden"} w-full lg:flex lg:w-auto`}>
 
                         {/* Mobile Search */}
-                        <div className="relative mt-3 lg:hidden ">
+                        {/* <div className="relative mt-3 lg:hidden ">
 
                             <div className='shadow-[0_0_10px_rgba(0,0,0,0.15)] rounded-4xl px-2'>
 
@@ -88,9 +81,9 @@ function Navbar() {
 
                             </div>
 
-                        </div>
+                        </div> */}
 
-                        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-3 mt-4 lg:mt-0">
+                        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-4 mt-4 lg:mt-0">
 
 
                             {/* Services */}
@@ -113,68 +106,18 @@ function Navbar() {
                                     Login/Register
                                 </button>
                             </li>
-                            <li>
-                                <Link
-                                    to="/rental"
-                                    className="block p-2 hover:bg-gray-100 rounded lg:hidden block"
-                                    onClick={() => setMenuOpen(false)}
 
-                                >
-                                    Bookings
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/user"
-                                    className="block p-2 hover:bg-gray-100 rounded lg:hidden block"
-                                    onClick={() => setMenuOpen(false)}
-                                >
-                                    My Profile
-                                </Link>
-                            </li>
-                            <div className="flex flex-col space-y-2 py-3 md:pe-16 md:hidden">
-                                <div className=' w-[25px] h-[15px]' 
-                                onClick={() => setIsFlagmodalOpen(true)}
-                                >
-                                    <img src={england} alt="England" className='w-full h-full' />
-                                </div>
-                                <div className='text-sm italic cursor-pointer'
-                                    onClick={() => {
-                                        dispatch(openChat("how"))
-                                        setMenuOpen(false)
-                                    }}
-                                >
-                                    How Rental paltform works
-                                </div>
-                                <div className='text-sm italic cursor-pointer'
-                                    onClick={() => {
-                                        dispatch(openChat("guarantee"))
-                                        setMenuOpen(false)
-                                    }}
-                                >
-                                    Guarantee
-                                </div>
-                                <div className='text-sm italic cursor-pointer' 
-                                onClick={() => {
-                                    dispatch(openChat("faqs"))
-                                    setMenuOpen(false)
-                                }}
-                                >
-                                    FAQs
-                                </div>
-                                <Link to="about-us/contact" className='text-sm italic cursor-pointer' 
-                                onClick={() => setMenuOpen(false)}>
-                                    Contact</Link>
-                            </div>
+
+
 
                         </ul>
 
                     </div>
 
-                    <div className='relative hidden lg:block' >
+                    <div className='relative hidden lg:block ms-4' >
                         <button
                             onClick={() => setOpen(!open)}
-                            className="p-2 rounded-full hover:bg-gray-100 border border-gray-200"
+                            className="p-2 rounded-full bg-white border border-gray-200 cursor-pointer"
                         >
                             <BsThreeDots size={20} />
                         </button>
@@ -210,11 +153,10 @@ function Navbar() {
 
                 </div>
             </nav>
-
             <Signin isOpen={isOpen} setIsOpen={setIsOpen} />
-            <Flagmodal isOpen={isFlagmodalOpen} setIsOpen={setIsFlagmodalOpen} />
-        </div>
+
+        </>
     )
 }
 
-export default Navbar
+export default HomeNavbar
