@@ -52,20 +52,22 @@ function Carousel() {
             scrollbarWidth: "none",
             msOverflowStyle: "none"
         }}>
-            <div className="flex gap-4 w-max ps-4" style={{ WebkitOverflowScrolling: "touch" }}>
+            <div className="flex md:gap-2 w-max" style={{ WebkitOverflowScrolling: "touch" }}>
 
                 {
                     carouselData.map((item, index) => {
 
                         return (
-                            <div key={index} className='cursor-pointer p-2 my-4 md:w-[400px] w-[260px]'>
+                            <div key={index} className='cursor-pointer p-2 my-4 md:w-[318px] w-[280px]'>
                                 <div className='hover:shadow-xl transition-shadow duration-300'>
                                     <div className='flex items-center justify-center border border-gray-300
                           rounded-tl-[35px] rounded-br-[35px] rounded-bl-[10px] rounded-tr-[10px] 
                           overflow-hidden relative'>
+                                    <div className='flex w-[100%] h-[200px] md:w-[100%] md:h-[230px]'>
                                         <img src={item.image} alt={item.product} className='w-full h-full 
                             rounded-tl-[35px] rounded-br-[35px] rounded-bl-[10px] rounded-tr-[10px] 
-                            hover:scale-105 transition-transform duration-300' />
+                            hover:scale-105 transition-transform duration-300 object-cover' />
+                                    </div>
 
                                         <div className='flex absolute bottom-2 left-2'>
                                             {[...Array(item.rating)].map((_, i) => (

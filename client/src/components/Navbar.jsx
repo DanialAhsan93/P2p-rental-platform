@@ -8,6 +8,7 @@ import { openChat } from '../redux/chatbot/chatbotSlice';
 import { useDispatch } from 'react-redux';
 import { england } from '../index';
 import Flagmodal from './Flagmodal';
+import { MdLocationSearching, MdOutlineCalendarMonth } from 'react-icons/md';
 
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ function Navbar() {
     return (
         <div>
             <nav className="bg-neutral-primary w-[93%] mx-auto ">
-                <div className="max-w-[1400px] flex flex-wrap items-center justify-between mx-auto p-4">
+                <div className="max-w-[2200px] flex flex-wrap items-center justify-between mx-auto p-4">
 
                     {/* 🔹 LOGO */}
                     <Link to="/" className="flex items-center">
@@ -210,6 +211,25 @@ function Navbar() {
 
                 </div>
             </nav>
+            <div className='w-full flex items-center justify-center gap-4 mt-0  '>
+                            <div className='flex items-center gap-2 justify-center cursor-pointer'>
+                                <span>
+                                    <MdLocationSearching className='text-dark text-[12px] sm:text-[16px]' />
+                                </span>
+                                <span className='text-dark m-0 text-[12px] sm:text-[16px]'>
+                                    Near London
+                                </span>
+                                <span className='text-cyan-500 hover:text-cyan-600 text-[12px] sm:text-[16px]'>(change)</span>
+                            </div>
+                            <div className='flex items-center gap-2 justify-center cursor-pointer'>
+                                <span>
+                                    <MdOutlineCalendarMonth className='text-dark text-[12px] sm:text-[16px]' />
+                                </span>
+                                <span className='text-cyan-500 hover:text-cyan-600 m-0 text-[12px] sm:text-[16px]'>
+                                    Select Date
+                                </span>
+                            </div>
+                        </div>
 
             <Signin isOpen={isOpen} setIsOpen={setIsOpen} />
             <Flagmodal isOpen={isFlagmodalOpen} setIsOpen={setIsFlagmodalOpen} />

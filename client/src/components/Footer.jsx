@@ -6,7 +6,11 @@ import { openChat } from '../redux/chatbot/chatbotSlice';
 function Footer() {
     const dispatch = useDispatch();
   return (
-    <footer className="bg-cyan-950 text-gray-300 py-10 px-4 lg:px-16">
+    <footer className="max-w-[2200px] w-full mx-auto">
+
+      <div className='bg-cyan-950 text-gray-300 py-10 px-4 lg:px-16'>
+
+      
 
       <div className="flex flex-wrap">
 
@@ -86,6 +90,8 @@ function Footer() {
       {/* Bottom */}
       <div className="border-t border-gray-700 mt-8 pt-4 text-center text-sm">
         © 2026 Rental-Platform
+      </div>
+
       </div>
 
     </footer>

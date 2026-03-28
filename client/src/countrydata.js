@@ -10,7 +10,14 @@ import {
     screwdriver,
     choose1,
     choose2,
-    choose3
+    choose3,
+    test,
+    test2,
+    main,
+    test3,
+    test4,
+    test5,
+    test6
 } from './index';
 import { LiaWineGlassSolid } from "react-icons/lia";
 import { FaRegIdCard, FaThumbsUp } from "react-icons/fa";
@@ -183,7 +190,7 @@ export const carouselData = [
     {
         id :0,
         product : "Sds drill and chisel hammer",
-        image: screwdriver,
+        image: test2,
         price: "£4-7",
         days : "1",
         rating: 5
@@ -191,7 +198,7 @@ export const carouselData = [
     {
         id :0,
         product : "Sds drill and chisel hammer",
-        image: screwdriver,
+        image: test6,
         price: "£4-7",
         days : "1",
         rating: 5
@@ -199,7 +206,7 @@ export const carouselData = [
     {
         id :0,
         product : "Sds drill and chisel hammer",
-        image: screwdriver,
+        image: test5,
         price: "£4-7",
         days : "1",
         rating: 5
@@ -207,7 +214,7 @@ export const carouselData = [
     {
         id :0,
         product : "Sds drill and chisel hammer",
-        image: screwdriver,
+        image: test4,
         price: "£4-7",
         days : "1",
         rating: 5
@@ -215,7 +222,7 @@ export const carouselData = [
     {
         id :0,
         product : "Sds drill and chisel hammer",
-        image: screwdriver,
+        image: main,
         price: "£4-7",
         days : "1",
         rating: 5

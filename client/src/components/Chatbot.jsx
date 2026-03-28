@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FiChevronUp, FiMessageCircle } from "react-icons/fi";
 import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import Grow from '@mui/material/Grow';
 import { IoCloseSharp } from "react-icons/io5";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoMdHelpCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { closeChat, openChat, setView } from '../redux/chatbot/chatbotSlice';
 import Chathow from './Chathow';
@@ -14,16 +14,24 @@ import Chatfaqs from './Chatfaqs';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import ChatMessage from './ChatMessage';
+import Chathelp from './Chathelp';
+import { MdOutlineMessage } from 'react-icons/md';
+import { RiHomeSmileFill } from "react-icons/ri";
 
 
 export default function Chatbot() {
-    const [value, setValue] = React.useState(0);
     const dispatch = useDispatch();
     const { isOpen, view } = useSelector((state) => state.chatbot);
+    const [value, setValue] = useState(view);
+    // console.log("view", view);
 
     useEffect(() => {
         dispatch(closeChat());
     }, []);
+
+    useEffect(() => {
+        setValue(view);
+    }, [view]);
 
     const buttonRef = useRef(null);
     const isReady = isOpen && Boolean(buttonRef.current);
@@ -45,7 +53,7 @@ export default function Chatbot() {
                 type="button"
                 ref={buttonRef}
                 onClick={toggle}
-                className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full flex items-center justify-center"
+                className="fixed bottom-6 right-6 bg-cyan-600 text-white p-4 rounded-full flex items-center justify-center"
             >
                 <span className="relative flex items-center justify-center">
 
@@ -89,7 +97,7 @@ export default function Chatbot() {
                                 width: {
                                     xs: "80vw",
                                     sm: "50vw",
-                                    md: "28vw"
+                                    md: view === "help" ? "34vw" : "28vw"
                                 },
                                 height: {
                                     xs: "80dvh",
@@ -115,29 +123,53 @@ export default function Chatbot() {
                                 {view === "guarantee" && <Chatguarantee />}
                                 {view === "faqs" && <Chatfaqs />}
                                 {view === "message" && <ChatMessage />}
+                                {view === "help" && <Chathelp />}
                             </Box>
 
-                            {(view === "home" || view === "message") && (
+                            {(view === "home" || view === "message" || view === "help") && (
                                 <BottomNavigation
                                     showLabels
                                     value={value}
                                     onChange={(event, newValue) => {
                                         setValue(newValue);
+                                        dispatch(setView(newValue));
 
-                                        if (newValue === 0) dispatch(setView("home"));
-                                        if (newValue === 1) dispatch(setView("message"));
-                                        if (newValue === 2) dispatch(setView("how"));
+                                        // if (newValue === 0) dispatch(setView("home"));
+                                        // if (newValue === 1) dispatch(setView("message"));
+                                        // if (newValue === 2) dispatch(setView("help"));
                                     }}
                                     sx={{
                                         borderTop: "1px solid #333",
                                         bgcolor: "#14161a",
                                         width: "100%",
-                                        flexShrink: 0
+                                        flexShrink: 0,
+                                        "& .MuiBottomNavigationAction-root": {
+                                            color: "#9ca3af", // gray-400
+                                        },
+                                        "& .Mui-selected": {
+                                            color: "#22d3ee", // blue-500 (or whatever you want)
+                                        },
+
                                     }}
                                 >
-                                    <BottomNavigationAction label="Home" icon={<FiMessageCircle />} />
-                                    <BottomNavigationAction label="message" icon={<FiMessageCircle />} />
-                                    <BottomNavigationAction label="How" icon={<FiMessageCircle />} />
+                                    <BottomNavigationAction value={"home"} label="Home"
+                                        icon={
+                                            <RiHomeSmileFill style={{
+                                                color: value === "home" ? "#22d3ee" : "#9ca3af", // active or inactive
+                                            }} />}
+                                    />
+                                    <BottomNavigationAction value={"message"} label="message"
+                                        icon={
+                                            <MdOutlineMessage style={{
+                                                color: value === "message" ? "#22d3ee" : "#9ca3af", // active or inactive
+                                            }} />}
+                                    />
+                                    <BottomNavigationAction value={"help"} label="Help"
+                                        icon={
+                                            <IoMdHelpCircleOutline style={{
+                                                color: value === "help" ? "#22d3ee" : "#9ca3af", // active or inactive
+                                            }} />}
+                                    />
                                 </BottomNavigation>
                             )}
 
