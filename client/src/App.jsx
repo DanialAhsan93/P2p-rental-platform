@@ -20,6 +20,8 @@ import Countryselector from './components/Countryselector';
 import Useredit from './pages/Useredit';
 import Favorities from './pages/Favorities';
 import Credit from './pages/Credit';
+import Item from './pages/Item';
+import Itemmap from './pages/Itemmap';
 
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
             <Route path="/user/edit" element={<Useredit />} />
             <Route path="/user/favorites" element={<Favorities />} />
             <Route path="/user/coupons" element={<Credit />} />
+            <Route path="/i/:id" element={<Item />} />
+            <Route path="/item-map" element={<Itemmap />} />
             <Route path="/rental" element={<Booking />} />
             <Route path="/new-item" element={<Dashboard />} />
             <Route path="/privacy-policy" element={<Privacypoilcy />} />

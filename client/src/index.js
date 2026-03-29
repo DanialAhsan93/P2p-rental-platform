@@ -18,6 +18,7 @@ import test4 from "./assets/test4.webp";
 import test5 from "./assets/test5.webp";
 import test6 from "./assets/test6.webp";
 import laptop from "./assets/laptop.jpg";
+import renterlogo from './assets/renterlogo.avif'
 export {
     england,
     sweden,
@@ -39,4 +40,5 @@ export {
     test5,
     test6,
     laptop,
+    renterlogo,
 }
