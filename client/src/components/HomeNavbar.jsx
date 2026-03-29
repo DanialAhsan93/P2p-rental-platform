@@ -3,13 +3,15 @@ import { IoIosSearch } from 'react-icons/io'
 import { Link } from 'react-router-dom';
 import { england } from '../index';
 import { BsThreeDots } from 'react-icons/bs';
-import Signin from './Signin';
+import { useSelector } from 'react-redux';
 
 function HomeNavbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
+    const { currentUser } = useSelector(state => state.user)
+console.log(currentUser)
 
     return (
         <>
@@ -100,11 +102,14 @@ function HomeNavbar() {
                             </li>
                             {/* Login/Register */}
                             <li>
-                                <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
+                                <Link to={'/signin'}>
+                                    <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
                                  hover:bg-gradient-to-bl font-medium text-sm px-4 py-2.5 
-                                rounded-full focus:outline-none focus:ring-0 lg:mt-0 mt-2 cursor-pointer' onClick={() => setIsOpen(true)}>
-                                    Login/Register
-                                </button>
+                                rounded-full focus:outline-none focus:ring-0 lg:mt-0 mt-2 cursor-pointer' >
+                                        Login/Register
+                                    </button>
+                                </Link>
+
                             </li>
 
 
@@ -115,12 +120,29 @@ function HomeNavbar() {
                     </div>
 
                     <div className='relative hidden lg:block ms-4' >
-                        <button
+                        {
+                            currentUser ? (
+                                <button
+                                    onClick={() => setOpen(!open)}
+                                    className="p-2 text-[20px] w-[45px] h-[45px] rounded-full bg-white border border-gray-200 cursor-pointer"
+                                >
+                                    {currentUser.username.charAt(0).toUpperCase()}
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => setOpen(!open)}
+                                    className="p-2 rounded-full bg-white border border-gray-200 cursor-pointer"
+                                >
+                                    <BsThreeDots size={20} />
+                                </button>
+                            )
+                        }
+                        {/* <button
                             onClick={() => setOpen(!open)}
                             className="p-2 rounded-full bg-white border border-gray-200 cursor-pointer"
                         >
                             <BsThreeDots size={20} />
-                        </button>
+                        </button> */}
 
                         {/* 🔹 Dropdown */}
                         {open && (
@@ -153,7 +175,6 @@ function HomeNavbar() {
 
                 </div>
             </nav>
-            <Signin isOpen={isOpen} setIsOpen={setIsOpen} />
 
         </>
     )

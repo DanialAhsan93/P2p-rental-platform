@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import chatbotReducer from './chatbot/chatbotSlice';
+import userReducer from './user/userSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 
 const storage = {
@@ -10,6 +11,7 @@ const storage = {
 
 const rootReducer = combineReducers({
   chatbot: chatbotReducer,
+  user: userReducer,
 });
 
 const persistConfig = {

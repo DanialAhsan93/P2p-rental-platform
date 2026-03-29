@@ -22,6 +22,8 @@ import Favorities from './pages/Favorities';
 import Credit from './pages/Credit';
 import Item from './pages/Item';
 import Itemmap from './pages/Itemmap';
+import Signup from './pages/Signup';
+import Signin from './pages/Signin';
 
 
 function App() {
@@ -33,7 +35,10 @@ function App() {
           <Route path="/" element={<Home />} />
 
           <Route element={<Layout />}>
-            <Route path="/about-us" element={<About />} />
+                      <Route path="/signin" element={<Signin />} />
+                      <Route path="/signup" element={<Signup />} />
+
+              <Route path="/about-us" element={<About />} />
             <Route path="/about-us/mission" element={<Mission />} />
             <Route path="/about-us/contact" element={<Contactus />} />
             <Route path="/about-us/partnerships" element={<Partnerships />} />

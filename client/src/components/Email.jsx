@@ -6,7 +6,7 @@ function Email({ goBack, setView }) {
     const isValidEmail = email.trim() !== ''
 
     return (
-        <div className='border border-1'>
+        <div className=''>
             <input
                 type="email"
                 placeholder="Enter your email"
@@ -22,6 +22,15 @@ function Email({ goBack, setView }) {
             >
                 Continue
             </button>
+            <div>
+                Donot have an account?
+                <button
+                    onClick={() => setView("signup")}
+                    className="text-blue-500 hover:underline"
+                >
+                    Sign up
+                </button>
+            </div>
 
             <button
                 onClick={goBack}

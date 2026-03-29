@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { Button } from "flowbite-react";
 import { BsThreeDots } from 'react-icons/bs';
 import { IoIosSearch } from "react-icons/io";
-import Signin from './Signin';
 import { openChat } from '../redux/chatbot/chatbotSlice';
 import { useDispatch } from 'react-redux';
 import { england } from '../index';
@@ -108,11 +107,14 @@ function Navbar() {
                             </li>
                             {/* Login/Register */}
                             <li>
-                                <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
+                                <Link to={'signin'}>
+                                 <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
                                  hover:bg-gradient-to-bl font-medium text-sm px-4 py-2.5 
-                                rounded-full focus:outline-none focus:ring-0 lg:mt-0 mt-2 cursor-pointer' onClick={() => setIsOpen(true)}>
+                                rounded-full focus:outline-none focus:ring-0 lg:mt-0 mt-2 cursor-pointer'>
                                     Login/Register
                                 </button>
+                                </Link>
+                               
                             </li>
                             <li>
                                 <Link
@@ -231,7 +233,6 @@ function Navbar() {
                             </div>
                         </div>
 
-            <Signin isOpen={isOpen} setIsOpen={setIsOpen} />
             <Flagmodal isOpen={isFlagmodalOpen} setIsOpen={setIsFlagmodalOpen} />
         </div>
     )
