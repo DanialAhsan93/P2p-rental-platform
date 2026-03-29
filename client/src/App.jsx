@@ -17,6 +17,9 @@ import Privacypoilcy from './pages/Privacypoilcy';
 import Categories from './pages/Categories';
 import Blog from './pages/Blog';
 import Countryselector from './components/Countryselector';
+import Useredit from './pages/Useredit';
+import Favorities from './pages/Favorities';
+import Credit from './pages/Credit';
 
 
 function App() {
@@ -35,6 +38,9 @@ function App() {
             <Route path="/tou" element={<Tou />} />
             <Route path="/new-item" element={<Dashboard />} />
             <Route path="/user" element={<Profile />} />
+            <Route path="/user/edit" element={<Useredit />} />
+            <Route path="/user/favorites" element={<Favorities />} />
+            <Route path="/user/coupons" element={<Credit />} />
             <Route path="/rental" element={<Booking />} />
             <Route path="/new-item" element={<Dashboard />} />
             <Route path="/privacy-policy" element={<Privacypoilcy />} />

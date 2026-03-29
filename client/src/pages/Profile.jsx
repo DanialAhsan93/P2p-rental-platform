@@ -11,10 +11,16 @@ import { PiReadCvLogoBold } from "react-icons/pi";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { useState } from "react";
 import Flagmodal from "../components/Flagmodal";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { openChat } from '../redux/chatbot/chatbotSlice';
 
 
 function Profile() {
+
   const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className='max-w-[2200px] w-[93%] flex justify-center mx-auto min-h-screen lg:p-4'>
@@ -22,29 +28,36 @@ function Profile() {
           <h1 className='text-[30px] lg:text-[40px] font-bold md:py-4 py-2'>
             My Profile
           </h1>
-          {/* <div onClick={() => setIsFlagmodalOpen(true)}> */}
-          <Reusableprofile
-            onClick={() => setIsFlagmodalOpen(true)}
-            icon={<FaRegFlag className="text-2xl font-extrabold" />}
-            text="Current country: GB"
+          <div className='cursor-pointer'>
+            <Reusableprofile
+              onClick={() => setIsFlagmodalOpen(true)}
+              icon={<FaRegFlag className="text-2xl font-extrabold" />}
+              text="Current country: GB"
+            />
+          </div>
 
-          />
-          {/* </div> */}
+          <Link to="/user/edit">
+            <Reusableprofile
+              icon={<FaRegUser className="text-2xl font-extrabold" />}
+              text="Edit profile"
+              subtext="Edit your contact details"
+            />
+          </Link>
 
-          <Reusableprofile
-            icon={<FaRegUser className="text-2xl font-extrabold" />}
-            text="Edit profile"
-            subtext="Edit your contact details"
-          />
-          <Reusableprofile
-            icon={<FaRibbon className="text-2xl font-extrabold" />}
-            text="My favorities"
-          />
+          <Link to={'/user/favorites'}>
+            <Reusableprofile
+              icon={<FaRibbon className="text-2xl font-extrabold" />}
+              text="My favorities"
+            />
+          </Link>
 
-          <Reusableprofile
-            icon={<MdOutlinePayments className="text-2xl font-extrabold" />}
-            text="Credit balance"
-          />
+          <Link to="/user/coupons">
+            <Reusableprofile
+              icon={<MdOutlinePayments className="text-2xl font-extrabold" />}
+              text="Credit balance"
+            />
+          </Link>
+
 
           <Reusableprofile
             icon={<MdLockOutline className="text-2xl font-extrabold" />}
@@ -56,17 +69,20 @@ function Profile() {
             Help
           </h1>
           <Reusableprofile
+            onClick={() => dispatch(openChat("message"))}
             icon={<PiChatCircleTextBold className="text-2xl font-extrabold" />}
             text="Start chat"
             subtext={'Contact Rent-platform'}
           />
           <Reusableprofile
+            onClick={() => dispatch(openChat("faqs"))}
             icon={<MdOutlineQuestionAnswer className="text-2xl font-extrabold" />}
             text="Frequently asked questions"
             subtext={'Here you will find information about most things about Hygglo and our services.'}
           />
 
           <Reusableprofile
+            onClick={() => dispatch(openChat("toc"))}
             icon={<PiReadCvLogoBold className="text-2xl font-extrabold" />}
             text="Terms and conditions"
             subtext={'Read our terms and conditions.'}

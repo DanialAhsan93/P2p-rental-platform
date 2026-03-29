@@ -4,7 +4,7 @@ import { FaChevronRight } from "react-icons/fa6";
 
 function Reusableprofile({icon , text, subtext, onClick}) {
   return (
-    <div className='flex flex-row items-center justify-center md:py-5 py-3' onClick={onClick}>
+    <div className='flex flex-row items-center justify-center md:py-5 py-3 cursor-pointer' onClick={onClick}>
         <div className='w-[5%]'>
             {icon}
         </div>

@@ -17,6 +17,7 @@ import ChatMessage from './ChatMessage';
 import Chathelp from './Chathelp';
 import { MdOutlineMessage } from 'react-icons/md';
 import { RiHomeSmileFill } from "react-icons/ri";
+import Chatterms from './Chatterms';
 
 
 export default function Chatbot() {
@@ -124,6 +125,7 @@ export default function Chatbot() {
                                 {view === "faqs" && <Chatfaqs />}
                                 {view === "message" && <ChatMessage />}
                                 {view === "help" && <Chathelp />}
+                                {view === "toc" && <Chatterms />}
                             </Box>
 
                             {(view === "home" || view === "message" || view === "help") && (
