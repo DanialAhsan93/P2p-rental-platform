@@ -11,7 +11,7 @@ function HomeNavbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
     const { currentUser } = useSelector(state => state.user)
-console.log(currentUser)
+    console.log(currentUser)
 
     return (
         <>

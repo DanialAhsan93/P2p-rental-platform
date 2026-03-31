@@ -4,7 +4,7 @@ import { Button } from "flowbite-react";
 import { BsThreeDots } from 'react-icons/bs';
 import { IoIosSearch } from "react-icons/io";
 import { openChat } from '../redux/chatbot/chatbotSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { england } from '../index';
 import Flagmodal from './Flagmodal';
 import { MdLocationSearching, MdOutlineCalendarMonth } from 'react-icons/md';
@@ -13,8 +13,9 @@ function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-  const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
-
+    const [isFlagmodalOpen, setIsFlagmodalOpen] = useState(false);
+    const { currentUser } = useSelector((state) => state.user);
+    // console.log('navbar', currentUser, currentUser.isAdmin);
     const dispatch = useDispatch();
 
 
@@ -108,13 +109,13 @@ function Navbar() {
                             {/* Login/Register */}
                             <li>
                                 <Link to={'signin'}>
-                                 <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
+                                    <button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 
                                  hover:bg-gradient-to-bl font-medium text-sm px-4 py-2.5 
                                 rounded-full focus:outline-none focus:ring-0 lg:mt-0 mt-2 cursor-pointer'>
-                                    Login/Register
-                                </button>
+                                        Login/Register
+                                    </button>
                                 </Link>
-                               
+
                             </li>
                             <li>
                                 <Link
@@ -135,9 +136,22 @@ function Navbar() {
                                     My Profile
                                 </Link>
                             </li>
+                            {
+                                currentUser && currentUser.isAdmin && (
+                                    <li>
+                                        <Link
+                                            to="/admin"
+                                            className="block p-2 hover:bg-gray-100 rounded lg:hidden block"
+                                            onClick={() => setMenuOpen(false)}
+                                        >
+                                            Admin Panel
+                                        </Link>
+                                    </li>
+                                )
+                            }
                             <div className="flex flex-col space-y-2 py-3 md:pe-16 md:hidden">
-                                <div className=' w-[25px] h-[15px]' 
-                                onClick={() => setIsFlagmodalOpen(true)}
+                                <div className=' w-[25px] h-[15px]'
+                                    onClick={() => setIsFlagmodalOpen(true)}
                                 >
                                     <img src={england} alt="England" className='w-full h-full' />
                                 </div>
@@ -157,16 +171,16 @@ function Navbar() {
                                 >
                                     Guarantee
                                 </div>
-                                <div className='text-sm italic cursor-pointer' 
-                                onClick={() => {
-                                    dispatch(openChat("faqs"))
-                                    setMenuOpen(false)
-                                }}
+                                <div className='text-sm italic cursor-pointer'
+                                    onClick={() => {
+                                        dispatch(openChat("faqs"))
+                                        setMenuOpen(false)
+                                    }}
                                 >
                                     FAQs
                                 </div>
-                                <Link to="about-us/contact" className='text-sm italic cursor-pointer' 
-                                onClick={() => setMenuOpen(false)}>
+                                <Link to="about-us/contact" className='text-sm italic cursor-pointer'
+                                    onClick={() => setMenuOpen(false)}>
                                     Contact</Link>
                             </div>
 
@@ -204,6 +218,22 @@ function Navbar() {
                                             My Profile
                                         </Link>
                                     </li>
+                                    {
+                                        currentUser && currentUser.isAdmin && (
+                                            <li>
+                                                <Link
+                                                    to="/admin"
+                                                    className="block p-2 hover:bg-gray-100 rounded"
+
+                                                >
+                                                    Admin Panel
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
+
+
+
 
                                 </ul>
                             </div>
@@ -214,24 +244,24 @@ function Navbar() {
                 </div>
             </nav>
             <div className='w-full flex items-center justify-center gap-4 mt-0  '>
-                            <div className='flex items-center gap-2 justify-center cursor-pointer'>
-                                <span>
-                                    <MdLocationSearching className='text-dark text-[12px] sm:text-[16px]' />
-                                </span>
-                                <span className='text-dark m-0 text-[12px] sm:text-[16px]'>
-                                    Near London
-                                </span>
-                                <span className='text-cyan-500 hover:text-cyan-600 text-[12px] sm:text-[16px]'>(change)</span>
-                            </div>
-                            <div className='flex items-center gap-2 justify-center cursor-pointer'>
-                                <span>
-                                    <MdOutlineCalendarMonth className='text-dark text-[12px] sm:text-[16px]' />
-                                </span>
-                                <span className='text-cyan-500 hover:text-cyan-600 m-0 text-[12px] sm:text-[16px]'>
-                                    Select Date
-                                </span>
-                            </div>
-                        </div>
+                <div className='flex items-center gap-2 justify-center cursor-pointer'>
+                    <span>
+                        <MdLocationSearching className='text-dark text-[12px] sm:text-[16px]' />
+                    </span>
+                    <span className='text-dark m-0 text-[12px] sm:text-[16px]'>
+                        Near London
+                    </span>
+                    <span className='text-cyan-500 hover:text-cyan-600 text-[12px] sm:text-[16px]'>(change)</span>
+                </div>
+                <div className='flex items-center gap-2 justify-center cursor-pointer'>
+                    <span>
+                        <MdOutlineCalendarMonth className='text-dark text-[12px] sm:text-[16px]' />
+                    </span>
+                    <span className='text-cyan-500 hover:text-cyan-600 m-0 text-[12px] sm:text-[16px]'>
+                        Select Date
+                    </span>
+                </div>
+            </div>
 
             <Flagmodal isOpen={isFlagmodalOpen} setIsOpen={setIsFlagmodalOpen} />
         </div>

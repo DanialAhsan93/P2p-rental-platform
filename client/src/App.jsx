@@ -7,7 +7,7 @@ import Mission from './pages/Mission';
 import Contactus from './pages/Contactus';
 import Partnerships from './pages/Partnerships';
 import Tou from './pages/Tou';
-import Dashboard from './pages/Dashboard';
+import Listing from './pages/Listing';
 import Layout from './components/Layout';
 import Profile from './pages/Profile';
 import Booking from './pages/Booking';
@@ -24,7 +24,9 @@ import Item from './pages/Item';
 import Itemmap from './pages/Itemmap';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-
+import CategoryAdminPanel from './pages/CategoryAdminPanel';
+import Dashboard from './pages/Dashboard';
+import Privateroute from './components/Privateroute';
 
 function App() {
 
@@ -32,31 +34,33 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
 
-          <Route element={<Layout />}>
-                      <Route path="/signin" element={<Signin />} />
-                      <Route path="/signup" element={<Signup />} />
-
-              <Route path="/about-us" element={<About />} />
-            <Route path="/about-us/mission" element={<Mission />} />
-            <Route path="/about-us/contact" element={<Contactus />} />
-            <Route path="/about-us/partnerships" element={<Partnerships />} />
-            <Route path="/tou" element={<Tou />} />
-            <Route path="/new-item" element={<Dashboard />} />
-            <Route path="/user" element={<Profile />} />
-            <Route path="/user/edit" element={<Useredit />} />
-            <Route path="/user/favorites" element={<Favorities />} />
-            <Route path="/user/coupons" element={<Credit />} />
-            <Route path="/i/:id" element={<Item />} />
-            <Route path="/item-map" element={<Itemmap />} />
-            <Route path="/rental" element={<Booking />} />
-            <Route path="/new-item" element={<Dashboard />} />
-            <Route path="/privacy-policy" element={<Privacypoilcy />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/country" element={<Countryselector />} />
+        <Route element={<Layout />}>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/about-us" element={<About />} />
+          <Route path="/about-us/mission" element={<Mission />} />
+          <Route path="/about-us/contact" element={<Contactus />} />
+          <Route path="/about-us/partnerships" element={<Partnerships />} />
+          <Route path="/tou" element={<Tou />} />
+          <Route path="/new-item" element={<Listing />} />
+          <Route path="/user" element={<Profile />} />
+          <Route path="/user/edit" element={<Useredit />} />
+          <Route path="/user/favorites" element={<Favorities />} />
+          <Route path="/user/coupons" element={<Credit />} />
+          <Route path="/i/:id" element={<Item />} />
+          <Route path="/item-map" element={<Itemmap />} />
+          <Route path="/rental" element={<Booking />} />
+          <Route path="/privacy-policy" element={<Privacypoilcy />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/country" element={<Countryselector />} />
+          <Route path="/category-admin" element={<CategoryAdminPanel />} />
+          <Route  element={<Privateroute />}>
+            <Route path="/admin" element={<Dashboard />} />
           </Route>
+        </Route>
 
 
       </Routes>

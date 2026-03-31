@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Reusabletitle from './Reusabletitle';
 import { FileInput, TextInput } from 'flowbite-react';
 import Imageuploader from './Imageuploader';
@@ -6,9 +6,11 @@ import Dashprice from './Dashprice';
 import { useDispatch, useSelector } from 'react-redux';
 import { openChat } from '../redux/chatbot/chatbotSlice';
 import Reusablebtn from './Reusablebtn';
+import Categorymodal from './Categorymodal';
 
 function Dashitemdesc() {
     const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <div className=''>
@@ -16,7 +18,7 @@ function Dashitemdesc() {
                 <Reusabletitle number={1} title="Select category" size='text-[18px]' />
                 <div className='md:ps-12 py-3 md:pe-8'>
                     <div className='border border-gray-300 rounded-md md:px-3 px-1 py-1 flex items-center 
-                    justify-between shadow-[0_4px_15px_rgba(0,0,0,0.15)]'>
+                    justify-between shadow-[0_4px_15px_rgba(0,0,0,0.15)]'  onClick={() => setIsOpen(true)}>
                         <span className='text-[14px] '>
                             Select category
                         </span>
@@ -221,7 +223,7 @@ function Dashitemdesc() {
             </div>
 
 
-
+            <Categorymodal isOpen={isOpen} setIsOpen={setIsOpen} />
 
         </div>
     )

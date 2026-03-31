@@ -62,33 +62,130 @@ export const signup = async (req, res, next) => {
     res
       .cookie('access_token', token, {
         httpOnly: true,
-        secure: false, 
+        secure: false,
         sameSite: 'lax'
       })
       .status(200)
-      .json({ success: true, message: 'Signup successful' });
+      .json({
+        success: true, message: 'Signup successful', user: {
+          _id: newUser._id,
+          email: newUser.email,
+          onboardingCompleted: newUser.onboardingCompleted
+        }
+      });
 
   } catch (error) {
     next(error);
   }
 };
 
+// export const onboarding = async (req, res, next) => {
+//   const userId = req.user.id;
+//   const { referralSource, userRole, phone, otp } = req.body;
+//   console.log(referralSource, userRole, phone, otp);
+
+//   if (!referralSource || !userRole || !phone || !otp) {
+//     return next(errorHandler(400, 'All fields are required'));
+//   }
+
+//   try {
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       return next(errorHandler(404, 'User not found'));
+//     }
+
+//     // ✅ OTP validation
+//     if (user.otp !== otp || user.otpExpires < Date.now()) {
+//       return next(errorHandler(400, 'Invalid or expired OTP'));
+//     }
+
+//     // ✅ Update user
+//     user.referralSource = referralSource;
+//     user.userRole = userRole;
+//     user.phone = phone;
+//     user.phoneVerified = true;
+//     user.onboardingCompleted = true;
+
+//     // clear OTP
+//     user.otp = null;
+//     user.otpExpires = null;
+
+//     await user.save();
+
+//     res.json({
+//       success: true,
+//       message: 'Onboarding completed'
+//     });
+
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const onboarding = async (req, res, next) => {
   const userId = req.user.id;
-  const { referralSource, userRole } = req.body;
-  console.log('USER:', req.user);
-  if (!referralSource || !userRole) {
-    return next(errorHandler(400, 'Please provide both referralSource and userRole'));
+  const { referralSource, userRole, phone, otp } = req.body;
+
+
+  if (!referralSource || !userRole || !phone || !otp) {
+    return next(errorHandler(400, 'All fields are required'));
   }
 
   try {
-    await User.findByIdAndUpdate(userId, {
-      referralSource,
-      userRole,
-      onboardingCompleted: true
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(errorHandler(404, 'User not found'));
+    }
+
+    if (user.otp !== otp || user.otpExpires < Date.now()) {
+      return next(errorHandler(400, 'Invalid or expired OTP'));
+    }
+
+    if (phone && phone !== user.phone) {
+      const existing = await User.findOne({ phone });
+      if (existing) {
+        return next(errorHandler(400, 'Phone number already in use'));
+      }
+      user.phone = phone;
+      user.phoneVerified = true;
+    }
+
+    user.referralSource = referralSource;
+    user.userRole = userRole;
+    user.onboardingCompleted = true;
+
+    user.otp = null;
+    user.otpExpires = null;
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Onboarding completed'
     });
 
-    res.json({ success: true, message: 'Onboarding info saved' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const sendOtp = async (req, res, next) => {
+  const { phone } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    await User.findByIdAndUpdate(userId, {
+      otp,
+      otpExpires: Date.now() + 5 * 60 * 1000 // 5 min
+    });
+
+    console.log("OTP:", otp); // send via SMS in production
+
+    res.json({ success: true, message: 'OTP sent' });
   } catch (error) {
     next(error);
   }
@@ -115,7 +212,7 @@ export const signin = async (req, res, next) => {
 
     const token = jwt.sign(
       { id: validUser._id, isAdmin: validUser.isAdmin },
-      process.env.JWT_Secret
+      process.env.JWT_SECRET
     );
 
     // this is destructuring technique to hide the password;

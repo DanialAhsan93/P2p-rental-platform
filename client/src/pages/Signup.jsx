@@ -2,6 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput, Modal, ModalBody, ModalHeader
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Onboard from '../components/Onboard';
+import PhoneModal from '../components/Phonemodal';
 // import OAuth from '../components/OAuth';
 
 function Signup() {
@@ -9,11 +10,14 @@ function Signup() {
     const [form, formData] = useState({});
     const [errorMessage, seterrorMessage] = useState(null);
     const [loading, setloading] = useState(false);
-    const [showModal, setShowModal] = useState(false)
+    const [showPhoneModal, setShowPhoneModal] = useState(false);
+    const [showOnboardModal, setShowOnboardModal] = useState(false);
     const [onboarding, setOnboarding] = useState({
         referralSource: '',
-        userRole: ''
-    })
+        userRole: '',
+        phone: '',
+        otp: ''
+    });
     const navigate = useNavigate()
 
     const handleInput = (e) => {
@@ -54,7 +58,7 @@ function Signup() {
             // }else{
             //   alert(data.message)
             // }
-            setShowModal(true);
+            setShowPhoneModal(true);
             // if (response.ok) {
             //     navigate('/signin')
             // }
@@ -65,39 +69,66 @@ function Signup() {
         }
     }
 
-    const handleOnboardingSubmit = async () => {
-        if (!onboarding.referralSource || !onboarding.userRole) {
-            return seterrorMessage('Please select both options.')
-        }
+    // const handleOnboardingSubmit = async () => {
+    //     if (!onboarding.referralSource || !onboarding.userRole || !onboarding.phone || !onboarding.otp) {
+    //         return seterrorMessage('Please fill all fields and OTP.');
+    //     }
 
 
-        try {
-            setloading(true)
-            seterrorMessage(null)
+    //     try {
+    //         setloading(true)
+    //         seterrorMessage(null)
 
-            const response = await fetch(`http://localhost:3000/api/auth/onboarding`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(onboarding),
-                credentials: 'include' // important
-            })
+    //         const response = await fetch(`http://localhost:3000/api/auth/onboarding`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(onboarding),
+    //             credentials: 'include' // important
+    //         })
 
-            const data = await response.json()
-            setloading(false)
+    //         const data = await response.json()
+    //         setloading(false)
 
-            if (!response.ok) {
-                return seterrorMessage(data.message || 'Failed to save onboarding info')
-            }
+    //         if (!response.ok) {
+    //             return seterrorMessage(data.message || 'Failed to save onboarding info')
+    //         }
 
-            // ✅ Close the modal and navigate to dashboard
-            setShowModal(false)
-            navigate('/signin')
+    //         // ✅ Close the modal and navigate to dashboard
+    //         setShowModal(false)
+    //         navigate('/signin')
 
-        } catch (error) {
-            seterrorMessage(error.message)
-            setloading(false)
-        }
-    }
+    //     } catch (error) {
+    //         seterrorMessage(error.message)
+    //         setloading(false)
+    //     }
+    // }
+
+    // const handleSendOtp = async () => {
+    //     if (!onboarding.phone) return seterrorMessage('Please enter phone number.');
+
+    //     setloading(true);
+    //     seterrorMessage(null);
+
+    //     try {
+    //         const res = await fetch(`http://localhost:3000/api/auth/send-otp`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ phone: onboarding.phone }),
+    //             credentials: 'include'
+    //         });
+
+    //         const data = await res.json();
+    //         setloading(false);
+
+    //         if (!res.ok) return seterrorMessage(data.message || 'Failed to send OTP');
+
+    //         alert('OTP sent! Check your email or phone.');
+
+    //     } catch (err) {
+    //         seterrorMessage(err.message);
+    //         setloading(false);
+    //     }
+    // }
     return (
         <div className='min-h-screen mt-20'>
             <div className='flex p-3 max-w-3xl flex-col md:flex-row md:items-center mx-auto gap-5'>
@@ -199,7 +230,7 @@ function Signup() {
                     
                 </Modal> */}
             </div>
-            <Onboard
+            {/* <Onboard
                 isOpen={showModal}
                 setIsOpen={setShowModal}
                 handleOnboarding={handleOnboarding}
@@ -207,6 +238,27 @@ function Signup() {
                 onboarding={onboarding}
                 loading={loading}
                 errorMessage={errorMessage}
+            /> */}
+
+            {/* Phone Modal */}
+            <PhoneModal
+                isOpen={showPhoneModal}
+                setIsOpen={setShowPhoneModal}
+                onboarding={onboarding}
+                setOnboarding={setOnboarding}
+                setShowOnboardModal={setShowOnboardModal}
+                setErrorMessage={seterrorMessage}
+            />
+
+            {/* Onboard Modal */}
+            <Onboard
+                isOpen={showOnboardModal}
+                setIsOpen={setShowOnboardModal}
+                onboarding={onboarding}
+                handleOnboarding={handleOnboarding}
+                seterrorMessage={seterrorMessage}
+                setLoading={setloading}
+                navigate={navigate}
             />
         </div>
     )

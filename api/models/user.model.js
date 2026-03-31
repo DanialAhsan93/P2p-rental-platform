@@ -34,12 +34,32 @@ const userSchema = new mongoose.Schema({
     type: String, // "Facebook", "Google", "Friend", etc.
     default: null,
   },
+  phone: {
+    type: String,
+    unique: true,
+    sparse: true,
+    default: undefined
+  },
+  phoneVerified: {
+    type: Boolean,
+    default: false
+  },
+  otp: {
+    type: String,
+    default: null,
+  },
+  otpExpires: {
+    type: Date,
+    default: undefined
+  },
   userRole: {
     type: String,
-    enum: ["lend", "rent", "both"], // 3 options
-    default: null, // until user selects
+    enum: ["lend", "rent", "both"], 
+    default: null, 
   },
 }, { timestamps: true });
+
+userSchema.index({ phone: 1 }, { unique: true, sparse: true });
 
 const User = mongoose.model("User", userSchema);
 
